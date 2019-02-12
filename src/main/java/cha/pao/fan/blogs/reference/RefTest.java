@@ -2,6 +2,7 @@ package cha.pao.fan.blogs.reference;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,11 +19,21 @@ import java.util.Map;
  * 
  */
 
+class Car{
+	
+	private byte[] bytes;
+	
+	public Car(byte[] bytes) {
+		this.bytes=bytes;
+	}
+	
+}
+
 public class RefTest {
 	
 	public static void test1(){
 
-		ReferenceQueue queue=new ReferenceQueue();
+		ReferenceQueue queue=new ReferenceQueue();//对象回收时，自动放到这个队列中
 		Map<Object, Object> map = new HashMap<>();
 		
 		Thread thread = new Thread(() -> {
@@ -78,13 +89,27 @@ public class RefTest {
 		System.out.println("map.size->" + map.size());
 	}
 	
-	
+	/**
+	 * java.lang.OutOfMemoryError: Java heap space
+	 */
+	public static void test4(){
+		ArrayList list=new ArrayList();
+		for(int i=0;i<1024;i++){
+			byte[] bytes = new byte[1024*1];
+			list.add(new Car(bytes));
+			bytes=null;
+		}
+	}
 
 	public static void main(String[] args) throws InterruptedException {
 //		test2();
 //		test1();
-		test3();
+//		test3();
+		test4();
+		
+		
 		
 	}
+	
 
 }
