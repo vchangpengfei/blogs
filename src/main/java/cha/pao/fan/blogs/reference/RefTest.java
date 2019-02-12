@@ -19,8 +19,9 @@ import java.util.Map;
  */
 
 public class RefTest {
+	
+	public static void test1(){
 
-	public static void main(String[] args) throws InterruptedException {
 		ReferenceQueue queue=new ReferenceQueue();
 		Map<Object, Object> map = new HashMap<>();
 		
@@ -46,6 +47,44 @@ public class RefTest {
 		}
 		System.out.println("map.size->" + map.size());
 
+	
+	}
+	
+	
+	public static void test3(){
+		Map<Object, Object> map = new HashMap<>();
+		ReferenceQueue queue=new ReferenceQueue();
+		Object value = new Object();
+		for(int i = 0;i < 2048;i++) {
+		    byte[] bytes = new byte[1024*1];
+		    WeakReference<byte[]> weakReference = new WeakReference<byte[]>(bytes, queue);
+		    map.put(weakReference, value);
+		}
+		System.out.println("map.size->" + map.size());
+	}
+	
+	
+	
+	/**
+	 * OutOfMemoryError: Java heap space
+	 */
+	public static void test2(){
+		Map<Object, Object> map = new HashMap<>();
+		Object value = new Object();
+		for(int i = 0;i < 2048;i++) {
+		    byte[] bytes = new byte[1024*1];
+		    map.put(bytes, value);
+		}
+		System.out.println("map.size->" + map.size());
+	}
+	
+	
+
+	public static void main(String[] args) throws InterruptedException {
+//		test2();
+//		test1();
+		test3();
+		
 	}
 
 }
