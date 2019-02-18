@@ -10,7 +10,7 @@ public class SemaphoreTest {
         for(int i=0;i<8;i++)
             new Worker(i,semaphore).start();
     }
-     
+
     static class Worker extends Thread{
         private int num;
         private Semaphore semaphore;
