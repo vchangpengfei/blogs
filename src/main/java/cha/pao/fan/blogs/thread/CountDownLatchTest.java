@@ -40,6 +40,7 @@ public class CountDownLatchTest {
 		} catch (InterruptedException e) {
 
 		}
+		pool.shutdown();
 		System.out.println("This is main");
 	}
 }
