@@ -5,6 +5,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * aqs 共享锁实现
+ */
 public class CountDownLatchTest {
 	static CountDownLatch c = new CountDownLatch(2);
 	static ExecutorService pool = Executors.newFixedThreadPool(2);
@@ -19,7 +22,7 @@ public class CountDownLatchTest {
 					e.printStackTrace();
 				}
 				System.out.println("This is A");
-				c.countDown();
+					c.countDown();
 			}
 		});
 
