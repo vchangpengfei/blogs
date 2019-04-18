@@ -88,6 +88,9 @@ public class IndexSearchTest extends LuceneTestBase{
         Analyzer analyzer = new StandardAnalyzer();
 
         IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
+        indexWriterConfig.setRAMBufferSizeMB(0.01);
+        indexWriterConfig.setMaxBufferedDocs(5);
+        indexWriterConfig.setMaxBufferedDocs(2);
         IndexWriter writer=null;
 
 
