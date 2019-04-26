@@ -40,7 +40,12 @@ public class PendingTest {
         ByteBlockPool pool = new ByteBlockPool(new ByteBlockPool.DirectTrackingAllocator(bytesUsed));
         byte[] b="你好test".getBytes();
         BytesRef ref=new BytesRef(b);
-        pool.append(ref);
+
+        for(int i=0;i<100000;i++)
+        {
+            pool.append(ref);
+        }
+
         BytesRef refc=new BytesRef(b.length);
         pool.readBytes(0,refc.bytes,0,ref.length);
 
