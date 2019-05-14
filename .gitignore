@@ -26,3 +26,5 @@ out/
 deploy/
 # gitignore
 #.gitignore
+
+lucene_index/
