@@ -198,7 +198,6 @@ public class IndexSearchTest extends LuceneTestBase{
         long count=topDocs.totalHits;
 
         ScoreDoc[] scoreDocs=topDocs.scoreDocs;
-        NumericDocValues iddocvaljues=MultiDocValues.getNumericValues(searcher.getIndexReader(),"id");
         NumericDocValues pricedocvaljues=MultiDocValues.getNumericValues(searcher.getIndexReader(),"price");
         SortedNumericDocValues sortedintdocvaljues=MultiDocValues.getSortedNumericValues(searcher.getIndexReader(),"sortedint");
 
@@ -206,10 +205,8 @@ public class IndexSearchTest extends LuceneTestBase{
         for (ScoreDoc scoreDoc : scoreDocs) {
             //获取document
             int docId = scoreDoc.doc;
-            iddocvaljues.advanceExact(docId);
             pricedocvaljues.advanceExact(docId);
             Document document=searcher.doc(docId);
-            System.out.println(iddocvaljues.longValue());
             System.out.println(document.get("name"));
             System.out.println(pricedocvaljues.longValue());
         }
@@ -232,7 +229,6 @@ public class IndexSearchTest extends LuceneTestBase{
         long count=topDocs.totalHits;
 
         ScoreDoc[] scoreDocs=topDocs.scoreDocs;
-        NumericDocValues iddocvaljues=MultiDocValues.getNumericValues(searcher.getIndexReader(),"id");
         NumericDocValues pricedocvaljues=MultiDocValues.getNumericValues(searcher.getIndexReader(),"price");
         SortedNumericDocValues sortedintdocvaljues=MultiDocValues.getSortedNumericValues(searcher.getIndexReader(),"sortedint");
 
@@ -240,18 +236,13 @@ public class IndexSearchTest extends LuceneTestBase{
         for (ScoreDoc scoreDoc : scoreDocs) {
             //获取document
             int docId = scoreDoc.doc;
-            iddocvaljues.advanceExact(docId);
             pricedocvaljues.advanceExact(docId);
             Document document=searcher.doc(docId);
-            System.out.println(iddocvaljues.longValue());
             System.out.println(document.get("name"));
             System.out.println(pricedocvaljues.longValue());
         }
 
         System.out.println("========================");
-        //单个 随机读
-        iddocvaljues.advanceExact(5);
-        System.out.println(iddocvaljues.docID()+":"+iddocvaljues.longValue());
 
         pricedocvaljues.advanceExact(4);
         System.out.println(pricedocvaljues.docID()+":"+pricedocvaljues.longValue());
