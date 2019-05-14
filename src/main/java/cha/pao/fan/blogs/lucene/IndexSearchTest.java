@@ -100,7 +100,7 @@ public class IndexSearchTest extends LuceneTestBase{
         for (int i=0;i<15;i++) {
             Document document=new Document();
 
-            Field id=new NumericDocValuesField("id",i);
+//            Field id=new NumericDocValuesField("id",i);
             Field _id=new IntPoint("_id",i);
 
 
@@ -169,7 +169,7 @@ public class IndexSearchTest extends LuceneTestBase{
 
 
             document.add(_id);
-            document.add(id);
+//            document.add(id);
             document.add(name);
             document.add(price);
             document.add(sortedF);
