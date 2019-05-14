@@ -90,14 +90,14 @@ public class IndexSearchTest extends LuceneTestBase{
         IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
         indexWriterConfig.setRAMBufferSizeMB(10);
         indexWriterConfig.setMaxBufferedDocs(4);
-        indexWriterConfig.setMaxBufferedDocs(4);
         IndexWriter writer=null;
 
 
         //创建IndexWriter
         writer=new IndexWriter(newDirectory(),indexWriterConfig);
 
-        for (int i=0;i<12;i++) {
+
+        for (int i=0;i<15;i++) {
             Document document=new Document();
 
             Field id=new NumericDocValuesField("id",i);
