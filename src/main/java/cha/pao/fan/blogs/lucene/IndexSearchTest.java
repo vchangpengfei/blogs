@@ -192,7 +192,7 @@ public class IndexSearchTest extends LuceneTestBase{
 //        Query query=new TermQuery(new Term("name","9name"));
 
 //        Query query=IntPoint.newExactQuery("_id",1);
-        Query query=NumericDocValuesField.newSlowExactQuery("price",66);//多值查询
+        Query query=NumericDocValuesField.newSlowExactQuery("price",23);//多值查询
         TopDocs topDocs = searcher.search(query,10);
         //总记录数
         long count=topDocs.totalHits;
