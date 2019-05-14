@@ -88,16 +88,16 @@ public class IndexSearchTest extends LuceneTestBase{
         Analyzer analyzer = new StandardAnalyzer();
 
         IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
-        indexWriterConfig.setRAMBufferSizeMB(0.01);
-        indexWriterConfig.setMaxBufferedDocs(5);
-        indexWriterConfig.setMaxBufferedDocs(2);
+        indexWriterConfig.setRAMBufferSizeMB(10);
+        indexWriterConfig.setMaxBufferedDocs(4);
+        indexWriterConfig.setMaxBufferedDocs(4);
         IndexWriter writer=null;
 
 
         //创建IndexWriter
         writer=new IndexWriter(newDirectory(),indexWriterConfig);
 
-        for (int i=0;i<10;i++) {
+        for (int i=0;i<12;i++) {
             Document document=new Document();
 
             Field id=new NumericDocValuesField("id",i);
@@ -118,6 +118,46 @@ public class IndexSearchTest extends LuceneTestBase{
 
 
             Field price=new NumericDocValuesField("price",10*i);
+            if(i==0)
+            {
+                price=new NumericDocValuesField("price",20);
+            }
+
+            if(i==1)
+            {
+                price=new NumericDocValuesField("price",10);
+            }
+
+            if(i==2)
+            {
+                price=new NumericDocValuesField("price",20);
+            }
+
+            if(i==3)
+            {
+                price=new NumericDocValuesField("price",20);
+            }
+
+            if(i==4)
+            {
+                price=new NumericDocValuesField("price",78);
+            }
+
+            if(i==5)
+            {
+                price=new NumericDocValuesField("price",54);
+            }
+
+            if(i==6)
+            {
+                price=new NumericDocValuesField("price",23);
+            }
+
+            if(i==7)
+            {
+                price=new NumericDocValuesField("price",8);
+            }
+
 
             //支持多值返回
             SortedNumericDocValuesField sortedF=new SortedNumericDocValuesField("sortedint",i*3);
@@ -142,6 +182,40 @@ public class IndexSearchTest extends LuceneTestBase{
         writer.commit();
         writer.close();
     }
+
+
+    @Test
+    public void docvaluesSearch() throws IOException {
+        IndexReader reader= DirectoryReader.open(newDirectory());
+        IndexSearcher searcher=new IndexSearcher(reader);
+        //获取排序后的数据
+//        Query query=new TermQuery(new Term("name","9name"));
+
+//        Query query=IntPoint.newExactQuery("_id",1);
+        Query query=NumericDocValuesField.newSlowExactQuery("price",66);//多值查询
+        TopDocs topDocs = searcher.search(query,10);
+        //总记录数
+        long count=topDocs.totalHits;
+
+        ScoreDoc[] scoreDocs=topDocs.scoreDocs;
+        NumericDocValues iddocvaljues=MultiDocValues.getNumericValues(searcher.getIndexReader(),"id");
+        NumericDocValues pricedocvaljues=MultiDocValues.getNumericValues(searcher.getIndexReader(),"price");
+        SortedNumericDocValues sortedintdocvaljues=MultiDocValues.getSortedNumericValues(searcher.getIndexReader(),"sortedint");
+
+        //
+        for (ScoreDoc scoreDoc : scoreDocs) {
+            //获取document
+            int docId = scoreDoc.doc;
+            iddocvaljues.advanceExact(docId);
+            pricedocvaljues.advanceExact(docId);
+            Document document=searcher.doc(docId);
+            System.out.println(iddocvaljues.longValue());
+            System.out.println(document.get("name"));
+            System.out.println(pricedocvaljues.longValue());
+        }
+    }
+
+
 
     @Test
     public void search() throws IOException {
