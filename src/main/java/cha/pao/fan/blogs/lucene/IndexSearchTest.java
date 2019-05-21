@@ -10,6 +10,8 @@ import org.apache.lucene.queries.function.ValueSource;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.IOContext;
+import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.DocIdSetBuilder;
 import org.apache.lucene.util.FutureArrays;
 import org.junit.Before;
@@ -90,18 +92,24 @@ public class IndexSearchTest extends LuceneTestBase{
         IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
         indexWriterConfig.setRAMBufferSizeMB(10);
         indexWriterConfig.setMaxBufferedDocs(4);
+        indexWriterConfig.setInfoStream(System.out);
         IndexWriter writer=null;
 
 
         //创建IndexWriter
-        writer=new IndexWriter(newDirectory(),indexWriterConfig);
+        writer=new IndexWriter(newDirectory(),indexWriterConfig){
+            @Override
+            protected boolean isEnableTestPoints() {
+                return true;
+            }
+        };
 
 
         for (int i=0;i<15;i++) {
             Document document=new Document();
 
 //            Field id=new NumericDocValuesField("id",i);
-            Field _id=new IntPoint("_id",i);
+            StringField _id=new StringField("_id",i+"_id",Field.Store.YES);
 
 
             Field name=null;
@@ -185,22 +193,30 @@ public class IndexSearchTest extends LuceneTestBase{
 
 
     @Test
-    public void docvaluesSearch() throws IOException {
-        IndexReader reader= DirectoryReader.open(newDirectory());
+    public void stringSearch() throws IOException {
+        IndexReader reader= DirectoryReader.open(newDirectory() );
         IndexSearcher searcher=new IndexSearcher(reader);
-        //获取排序后的数据
-//        Query query=new TermQuery(new Term("name","9name"));
+        Query query=new TermQuery(new Term("_id","5_id") );//多值查询
+        TopDocs topDocs = searcher.search(query,10);
+        ScoreDoc[] scoreDocs=topDocs.scoreDocs;
+        //
+        for (ScoreDoc scoreDoc : scoreDocs) {
+            int docId = scoreDoc.doc;
+            Document document=searcher.doc(docId);
+            System.out.println(document.get("name"));
+            System.out.println(document.get("_id"));
+        }
+    }
 
-//        Query query=IntPoint.newExactQuery("_id",1);
+    @Test
+    public void docvaluesSearch() throws IOException {
+        IndexReader reader= DirectoryReader.open(newDirectory() );
+        IndexSearcher searcher=new IndexSearcher(reader);
         Query query=NumericDocValuesField.newSlowExactQuery("price",23);//多值查询
         TopDocs topDocs = searcher.search(query,10);
-        //总记录数
-        long count=topDocs.totalHits;
-
         ScoreDoc[] scoreDocs=topDocs.scoreDocs;
         NumericDocValues pricedocvaljues=MultiDocValues.getNumericValues(searcher.getIndexReader(),"price");
         SortedNumericDocValues sortedintdocvaljues=MultiDocValues.getSortedNumericValues(searcher.getIndexReader(),"sortedint");
-
         //
         for (ScoreDoc scoreDoc : scoreDocs) {
             //获取document
