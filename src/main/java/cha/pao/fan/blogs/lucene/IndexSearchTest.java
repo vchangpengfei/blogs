@@ -185,7 +185,12 @@ public class IndexSearchTest extends LuceneTestBase{
             document.add(setFileda);
             document.add(setFiledb);
 
-            writer.addDocument(document);
+            writer.updateDocument(new Term("_id","2_id"),document);
+
+//            if(i==2)
+//            {
+//                writer.deleteDocuments(new Term("_id","2_id"));
+//            }
         }
         writer.commit();
         writer.close();
