@@ -1,4 +1,4 @@
-package cha.pao.fan.blogs.api;
+package cha.pao.fan.blogs.jdk;
 
 import java.util.BitSet;
 
