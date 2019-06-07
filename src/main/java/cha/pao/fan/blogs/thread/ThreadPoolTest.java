@@ -35,7 +35,7 @@ public class ThreadPoolTest {
     }
 
     public static void main(String[] args) throws InterruptedException {
-            for (int i = 0; i < 200; i++) {
+            for (int i = 0; i < 20; i++) {
                 try{
                     threadPoolExecutor.execute(new MyTask());
                     System.out.println("线程池中正在执行的线程数量：" + threadPoolExecutor.getPoolSize());
@@ -52,11 +52,6 @@ public class ThreadPoolTest {
 class MyTask implements Runnable {
     @Override
     public void run() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         System.out.println(this.toString());
     }
 }

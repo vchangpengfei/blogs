@@ -193,6 +193,7 @@ public class IndexSearchTest extends LuceneTestBase{
 //            }
         }
         writer.commit();
+        writer.forceMerge(1);
         writer.close();
     }
 
