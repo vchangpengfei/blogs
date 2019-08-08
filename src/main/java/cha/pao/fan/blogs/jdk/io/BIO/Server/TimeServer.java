@@ -27,7 +27,7 @@ public class TimeServer {
             Socket socket = null;
             while (true){
                 socket=server.accept();
-                new Thread(new NIOInduction.BIO.Server.TimeServerHandler(socket)).start();
+                new Thread(new TimeServerHandler(socket)).start();
             }
         }
         finally {

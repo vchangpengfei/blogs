@@ -164,7 +164,6 @@ public class KDTreeTest {
 		l.add(new double[] { 1.0, 3.0 });
 		l.add(new double[] { 1.0, 3.5 });
 		l.add(new double[] { 1.0, 4.0 });
-
 		l.add(new double[] { 0.5, 2.0 });
 		l.add(new double[] { 0.6, 2.0 });
 		l.add(new double[] { 0.6, 1.9 });
