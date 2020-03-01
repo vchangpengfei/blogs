@@ -1,8 +1,7 @@
-#!/usr/bin/env python
 
 # -*- coding: utf-8 -*-
 
-file = open("./sensitive.txt",encoding='utf-8', errors='ignore')
+file = open("./sensitive.txt")
 
 # for line in file:
 #     sst=line.split()[1].replace(',','","')

@@ -2,9 +2,19 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cha.pao.fan</groupId>
   <artifactId>blogs</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  
-   <properties>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>junit</module>
+        <module>lucene</module>
+        <module>common</module>
+        <module>netty</module>
+        <module>rxjava</module>
+        <module>jdk</module>
+        <module>arithmetic</module>
+    </modules>
+
+    <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   
