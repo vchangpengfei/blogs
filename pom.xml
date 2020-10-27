@@ -12,6 +12,7 @@
         <module>rxjava</module>
         <module>jdk</module>
         <module>arithmetic</module>
+        <module>hanlp</module>
     </modules>
 
     <properties>
