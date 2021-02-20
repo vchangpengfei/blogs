@@ -26,5 +26,5 @@ out/
 deploy/
 # gitignore
 #.gitignore
-
+venv/
 lucene_index/
