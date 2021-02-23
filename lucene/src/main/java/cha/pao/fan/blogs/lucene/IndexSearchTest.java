@@ -242,7 +242,7 @@ public class IndexSearchTest extends LuceneTestBase{
         Query query=IntPoint.newSetQuery("setFiled",8,8,8);//多值查询
         TopDocs topDocs = searcher.search(query,10);
         //总记录数
-        long count=topDocs.totalHits;
+        long count=topDocs.totalHits.value;
 
         ScoreDoc[] scoreDocs=topDocs.scoreDocs;
         NumericDocValues pricedocvaljues=MultiDocValues.getNumericValues(searcher.getIndexReader(),"price");
@@ -281,7 +281,7 @@ public class IndexSearchTest extends LuceneTestBase{
         Query query2=IntPoint.newRangeQuery("_id",5,9);//PointRangeQuery.getInverseIntersectVisitor.visit(int docID, byte[] packedValue)这个地方查询doc
 
 
-        MyQuery myQuery=new MyQuery("id");
+//        MyQuery myQuery=new MyQuery("id");
 
         BooleanQuery.Builder booleanQuery=new BooleanQuery.Builder();
         booleanQuery.add(query1, BooleanClause.Occur.MUST);

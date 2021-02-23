@@ -84,7 +84,7 @@ public class SearchFiles {
       TopDocs results = searcher.search(query, 5 * hitsPerPage);
       ScoreDoc[] hits = results.scoreDocs;
     searcher.doc(0).get("contents");
-      int numTotalHits = Math.toIntExact(results.totalHits);
+      int numTotalHits = Math.toIntExact(results.totalHits.value);
       System.out.println(numTotalHits + " total matching documents");
 
 
@@ -109,7 +109,7 @@ public class SearchFiles {
     TopDocs results = searcher.search(query, 5 * hitsPerPage);
     ScoreDoc[] hits = results.scoreDocs;
 
-    int numTotalHits = Math.toIntExact(results.totalHits);
+    int numTotalHits = Math.toIntExact(results.totalHits.value);
     System.out.println(numTotalHits + " total matching documents");
 
     int start = 0;
